@@ -46,6 +46,8 @@ function radioButtons(questionSet) {
         buttonClick(choice, questionSet.answer);
       });
 
+      button.setAttribute("style", "display: block; margin-bottom: 10px;");
+
       document.body.appendChild(button);
       button.appendChild(document.createTextNode(choice)); 
     });
