@@ -74,6 +74,12 @@ function radioButtons(questionSet) {
 }
 
 function displayQuestion(index) {
+
+  var previousChoices = document.querySelectorAll('button');
+  previousChoices.forEach(function (choice) {
+    choice.remove();
+  });
+
   if (index < questions.length) {
     radioButtons(questions[index]);
   } else {
