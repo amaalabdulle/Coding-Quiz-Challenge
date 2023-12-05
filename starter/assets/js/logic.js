@@ -1,11 +1,19 @@
 var timeEl = document.querySelector(".timer");
 var start = document.querySelector('#start');
+var startScreen = document.querySelector('#start-screen');
+var questionTitle = document.querySelector('#question-title');
+var choices = document.querySelector('#choices');
 
 var secondsLeft = 100;
 
 // A start button that when clicked a timer starts
 start.addEventListener('click', function () {
 
+  startScreen.style.display = 'none'; // removes the start screen
+  questionTitle.style.display = 'block';
+  displayQuestion(currentQuestionIndex); // questions are displayed when timer starts
+
+  // countdown
     var timerInterval = setInterval(function() {
         secondsLeft--;
         timeEl.textContent = 'Time left: ' + secondsLeft;
@@ -18,44 +26,55 @@ start.addEventListener('click', function () {
       }, 1000);
 })
 
-// - Display first question
-//      add click event listener to "start quiz" button
-//      display the first question based on the questions that we have defined
-//      hide the start screen
-//      show questions screen and populate it with questions and the choices
-
-// var questionContainer = document.querySelector('#questions');
-var questionTitle = document.querySelector('#question-title');
-var startScreen = document.querySelector('#start-screen');
-var choices = document.querySelector('#choices');
 
 var currentQuestionIndex = 0;
 
-start.addEventListener('click', function () {
-    startScreen.style.display = 'none'; // removes the start screen
-    questionTitle.style.display = 'block';
-    displayQuestion(currentQuestionIndex);
-});
+function radioButtons(questionSet) {
+
+    // making an element for the title.
+    questionTitle.innerHTML = questionSet.question;
+    document.body.appendChild(questionTitle);
+
+    // making an element for the choices.
+    questionSet.choices.forEach(function (choice, index) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.name = choice;
+      button.value = choice;
+
+      button.addEventListener('click', function () {
+        buttonClick(choice, questionSet.answer);
+      });
+
+      document.body.appendChild(button);
+      button.appendChild(document.createTextNode(choice)); 
+    });
+    // 'document.createTextNode(choice)' creates a new text node
+    // with the content equal to the value of the choice variable
+    // from the 'questions' array.
+    // 'button.append.child' adds the text to the 'button' element.
+    // it links them together
+
+
+
+
+    // checking if the user has clicked the right answer
+
+      function buttonClick(userChoice, answer) {
+        if (userChoice === answer) {
+          alert ('Correct!');
+          currentQuestionIndex++;
+          displayQuestion(currentQuestionIndex);
+        } else {
+          alert ('Incorrect!');
+        }
+    }; 
+}
 
 function displayQuestion(index) {
-    var currentQuestion = questions[index];
-    questionTitle.textContent = currentQuestion.question;
-    choices.innerHTML = '';
-
-    currentQuestion.choices.forEach(function(choice, choiceIndex) {
-        var choiceEl = document.createElement('div');
-        var choicesButton = document.createElement('input');
-        choicesButton.type = 'radio';
-        choicesButton.name = 'question' + index;
-        choicesButton.value = choice;
-
-        choiceEl.appendChild(choicesButton);
-
-        var label = document.createElement('label');
-        label.textContent = choice;
-        label.htmlFor = 'choice' + choiceIndex;
-
-        choiceEl.appendChild(label);
-        choices.appendChild(choiceEl);
-    })
+  if (index < questions.length) {
+    radioButtons(questions[index]);
+  } else {
+    alert("Quiz completed!");
+  }
 }
