@@ -18,7 +18,7 @@ To start the quiz, user will need to press the 'start quiz' button where they wi
 ![alt text](starter/assets/images/starts-screen.png)
 ![alt text](starter/assets/images/questions.png)
 
-Link to deployed website: https://amaalabdulle.github.io/coding-quiz-challenge/
+Link to deployed website: https://amaalabdulle.github.io/Coding-Quiz-Challenge/
 
 ## Credits
 
